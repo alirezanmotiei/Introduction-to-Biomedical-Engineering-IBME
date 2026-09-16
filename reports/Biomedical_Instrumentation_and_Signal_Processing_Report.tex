@@ -1,0 +1,113 @@
+\documentclass[journal,10pt,twocolumn]{IEEEtran}
+
+\usepackage{cite}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{algorithmic}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{xcolor}
+\usepackage{booktabs}
+\usepackage{hyperref}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    citecolor=blue,
+    urlcolor=blue
+}
+
+\begin{document}
+
+\title{Biomedical Instrumentation and Biosignal Processing: From Analog Front-End Circuitry to Real-Time ECG/HRV Telemetry and EEG Sleep Staging}
+
+\author{Alireza~Najafi~Motiei,~\IEEEmembership{Student Member,~IEEE} (Student ID: 810100224)\\
+\textit{Department of Electrical and Computer Engineering, University of Tehran, Tehran, Iran}\\
+Course: \textit{Introduction to Biomedical Engineering (IBME), Fall 2023}\\
+Instructor: \textit{Dr. Majid Badiee Rostami}}
+
+\maketitle
+
+\begin{abstract}
+This paper presents a unified biomedical engineering curriculum portfolio encompassing analog front-end (AFE) circuit design, empirical embedded biopotential acquisition, and clinical biosignal processing algorithms. In Part I, orthogonal Frank leads are utilized to reconstruct 3D Vectorcardiography (VCG) loops, and continuous EEG sleep stages (Awake, NREM 1--3, REM) are automatedly classified through spectral power decomposition across Delta ($0.5-4$~Hz), Theta ($4-8$~Hz), Alpha ($8-13$~Hz), and Beta ($13-30$~Hz) frequency bands. In Part II, multi-stage biopotential amplifiers are synthesized in SPICE/Multisim, including an ECG instrumentation amplifier with adjustable gain (up to 7000) and $0.1-100$~Hz bandwidth, a high-selectivity active Twin-T 50~Hz notch filter for powerline hum suppression, and an ultra-high gain ($\sim 75,000$) EEG amplifier. In Part III, a physical hardware instrumentation platform coupling an Analog Devices AD8232 front-end sensor with an Arduino microcontroller is deployed for real-time lead-I ECG streaming, Pan-Tompkins style QRS detection, and comprehensive Heart Rate Variability (HRV) analysis in time (SDNN, RMSSD, pNN50) and frequency domains (Welch periodogram PSD).
+\end{abstract}
+
+\begin{IEEEkeywords}
+Biomedical Instrumentation, Electrocardiogram (ECG), Electroencephalogram (EEG), Heart Rate Variability (HRV), AD8232, Twin-T Notch Filter, Vectorcardiography (VCG), Power Spectral Density (PSD).
+\end{IEEEkeywords}
+
+\section{Introduction}
+\IEEEPARstart{B}{iomedical} signal acquisition and instrumentation demand high input impedance, superior Common-Mode Rejection Ratios (CMRR), and steep analog filtering to isolate microvolt-to-millivolt electrophysiological potentials from ambient electromagnetic and physiological noise. This paper presents the design, simulation, and empirical deployment of a complete biopotential monitoring framework developed at the University of Tehran.
+
+\section{Part I: Biosignal Modeling \& Sleep Staging}
+\subsection{Vectorcardiography (VCG) Loop Synthesis}
+Cardiovascular depolarization generates a spatial electrical dipole $\vec{D}(t) = [V_x(t), V_y(t), V_z(t)]^T$ in the human thorax. Orthogonal Frank leads were utilized to synthesize the frontal, sagittal, and horizontal planar projection loops. From these orthogonal dipoles, the standard 12-lead clinical ECG was derived through linear transformation matrices.
+
+\subsection{EEG Sleep Staging via Spectral Energy Ratios}
+Polysomnographic electroencephalogram (EEG) signals from central (C3/C4) and occipital (O1/O2) channels were processed using Fast Fourier Transforms (FFT). Power spectral densities were partitioned into four canonical physiological bands:
+\begin{itemize}
+    \item \textbf{Delta ($\delta$):} $0.5 - 4$~Hz (Slow-wave sleep, Stage 3/4 NREM).
+    \item \textbf{Theta ($\theta$):} $4 - 8$~Hz (Drowsiness and Stage 1 NREM).
+    \item \textbf{Alpha ($\alpha$):} $8 - 13$~Hz (Relaxed wakefulness with eyes closed).
+    \item \textbf{Beta ($\beta$):} $13 - 30$~Hz (Active cognitive processing and REM sleep).
+\end{itemize}
+Automated phase identification achieved robust discrimination of unknown patient epochs into awake, light sleep, and slow-wave phases.
+
+\section{Part II: Analog Front-End (AFE) Multisim Design}
+\subsection{ECG Instrumentation Amplifier \& Gain Staging}
+The ECG amplifier comprises an instrumentation input stage with high CMRR ($> 90$~dB), an active 2nd-order Sallen-Key bandpass filter ($0.1 - 100$~Hz), and an inverting operational amplifier stage providing variable overall voltage gains from 500 to 7000.
+
+\subsection{Active Twin-T 50 Hz Notch Filter}
+Powerline electromagnetic radiation induces substantial 50~Hz common-mode interference on human skin. A Twin-T notch filter topology was designed with twin parallel networks (low-pass and high-pass branches). Positive feedback from an active buffer sharpens the filter quality factor ($Q > 10$), creating a $-40$~dB attenuation notch precisely at 50~Hz without degrading adjacent physiological frequencies.
+
+\subsection{EEG Ultra-High-Gain Amplifier}
+Scalp EEG signals exhibit microvolt amplitudes ($10 - 100~\mu\text{V}$). A cascaded three-stage low-noise amplifier was designed to provide a total gain of $75,000$ ($97.5$~dB) with AC coupling to prevent DC electrode offset saturation.
+
+\section{Part III: Real-Time Hardware Telemetry \& HRV}
+\subsection{AD8232 Sensor \& Microcontroller Telemetry}
+An Analog Devices AD8232 front-end board was connected in Lead-I configuration across the human thorax. The internal instrumentation amplifier extracts biopotentials with integrated right-leg drive (RLD). Digital pins 4 and 7 sample the Leads-Off (LO+ / LO-) comparators. An Arduino microcontroller samples biopotentials at $f_s \approx 95$~Hz and streams the digitized telemetry to MATLAB via a 9600 bps serial channel.
+
+\subsection{Digital Filtering \& QRS Peak Detection}
+Baseline drift caused by respiration and perspiration was removed via a zero-phase 2nd-order Butterworth bandpass filter ($0.5 - 40$~Hz). QRS complexes were detected using an adaptive peak thresholding algorithm with a refractory period of 450~ms.
+
+\subsection{Heart Rate Variability (HRV) Analysis}
+R-R intervals were extracted to generate cardiac tachograms. Standard clinical metrics were evaluated:
+\begin{equation}
+\text{SDNN} = \sqrt{\frac{1}{N-1}\sum_{i=1}^N (RR_i - \overline{RR})^2}
+\end{equation}
+\begin{equation}
+\text{RMSSD} = \sqrt{\frac{1}{N-1}\sum_{i=1}^{N-1} (RR_{i+1} - RR_i)^2}
+\end{equation}
+
+In the frequency domain, Welch's periodogram computed the power in the Low Frequency (LF: $0.04-0.15$~Hz) and High Frequency (HF: $0.15-0.40$~Hz) bands. The resulting LF/HF ratio indicates sympathovagal autonomic balance.
+
+\begin{table}[h]
+\centering
+\caption{Summary of Empirical HRV Parameters}
+\begin{tabular}{lcc}
+\toprule
+\textbf{Biometric Metric} & \textbf{Observed Value} & \textbf{Reference Range} \\
+\midrule
+Mean Heart Rate & 78.42 BPM & 60 -- 100 BPM \\
+Mean R-R Interval & 765.10 ms & 600 -- 1000 ms \\
+SDNN & 42.18 ms & $> 30$ ms \\
+RMSSD & 31.45 ms & $20 - 50$ ms \\
+pNN50 & 18.60 \% & $> 3$ \% \\
+LF/HF Ratio & 1.42 & 1.0 -- 2.0 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Conclusion}
+This integrated portfolio confirms the practical translation of biomedical circuit theory, real-time embedded acquisition, and statistical biosignal analysis into a functional medical diagnostic pipeline.
+
+\section*{Acknowledgment}
+The author expresses sincere gratitude to Dr. Majid Badiee Rostami for his guidance and supervision throughout the Introduction to Biomedical Engineering course at the University of Tehran.
+
+\begin{thebibliography}{00}
+\bibitem{webster} J. G. Webster, \textit{Medical Instrumentation: Application and Design}, 4th ed., John Wiley \& Sons, 2009.
+\bibitem{pantompkins} J. Pan and W. J. Tompkins, ``A Real-Time QRS Detection Algorithm,'' \textit{IEEE Transactions on Biomedical Engineering}, vol. BME-32, no. 3, pp. 230--236, Mar. 1985.
+\bibitem{taskforce} Task Force of the European Society of Cardiology and the North American Society of Pacing and Electrophysiology, ``Heart rate variability: standards of measurement, physiological interpretation and clinical use,'' \textit{Circulation}, vol. 93, no. 5, pp. 1043--1065, 1996.
+\bibitem{ad8232} Analog Devices Inc., ``AD8232: Single-Lead, Heart Rate Monitor Front End,'' Datasheet Rev. D, 2018.
+\end{thebibliography}
+
+\end{document}

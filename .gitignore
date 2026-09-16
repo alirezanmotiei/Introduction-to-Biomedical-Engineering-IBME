@@ -1,0 +1,32 @@
+# Operating System Files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# MATLAB Temporary Files
+*.asv
+*.m~
+*.mat~
+*.slxc
+slprj/
+
+# Multisim Backups
+*.ms14 (Security copy)
+*.mp14 (Security copy)
+*.bak
+
+# LaTeX Build Artifacts
+*.aux
+*.bbl
+*.blg
+*.log
+*.out
+*.toc
+*.synctex.gz
+*.fls
+*.fdb_latexmk
+
+# Arduino IDE Artifacts
+*.hex
+*.elf
+build/
