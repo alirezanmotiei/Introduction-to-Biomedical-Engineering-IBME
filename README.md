@@ -1,7 +1,7 @@
 <div align="center">
 
-# Biomedical Instrumentation & Signal Processing
-### *From Analog Front-End Biopotential Circuitry to Real-Time Embedded ECG/HRV Telemetry and EEG Sleep Staging*
+# Introduction to Biomedical Engineering (IBME)
+### *Biopotential Instrumentation, Analog Front-End Circuits & Real-Time Embedded ECG Telemetry*
 
 **University of Tehran** &nbsp;|&nbsp; **Faculty of Electrical and Computer Engineering**  
 **Course:** Introduction to Biomedical Engineering (IBME) &nbsp;|&nbsp; **Semester:** Fall 2023 (پاییز ۱۴۰۲)  
@@ -296,10 +296,10 @@ If you utilize this coursework, circuit designs, or signal processing algorithms
 ```bibtex
 @misc{najafimotiei2023ibme,
   author       = {Alireza Najafi Motiei},
-  title        = {Biomedical Instrumentation and Signal Processing: From Analog Front-End Circuitry to Real-Time ECG/HRV Telemetry and EEG Sleep Staging},
+  title        = {Introduction to Biomedical Engineering (IBME): Biopotential Instrumentation, Front-End Circuits and Real-Time Telemetry},
   year         = {2023},
   publisher    = {GitHub},
-  howpublished = {\url{https://github.com/alirezanmotiei/Biomedical-Instrumentation-and-Signal-Processing}},
+  howpublished = {\url{https://github.com/alirezanmotiei/Introduction-to-Biomedical-Engineering-IBME}},
   note         = {Coursework Portfolio, Department of Electrical and Computer Engineering, University of Tehran}
 }
 ```
