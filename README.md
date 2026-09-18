@@ -13,7 +13,7 @@
 [![MATLAB](https://img.shields.io/badge/MATLAB-R2023b%2B-ED5F17.svg?style=flat&logo=mathworks&logoColor=white)](https://www.mathworks.com/products/matlab.html)
 [![Multisim](https://img.shields.io/badge/NI%20Multisim-v14.0%2B-008080.svg?style=flat)](https://www.ni.com/en/support/downloads/software-products/download.multisim.html)
 [![Arduino](https://img.shields.io/badge/Arduino-C%2B%2B%20Firmware-00979D.svg?style=flat&logo=arduino&logoColor=white)](https://www.arduino.cc/)
-[![Report](https://img.shields.io/badge/Reports-3%20Technical%20PDFs-red.svg?style=flat&logo=adobeacrobatreader&logoColor=white)](reports/)
+[![Report](https://img.shields.io/badge/Reports-4%20PDFs%20%26%20LaTeX-red.svg?style=flat&logo=adobeacrobatreader&logoColor=white)](reports/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 </div>
