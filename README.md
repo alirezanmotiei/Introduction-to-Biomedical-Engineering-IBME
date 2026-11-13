@@ -82,7 +82,7 @@ Located in [`01-biosignal-processing-vcg-eeg/`](01-biosignal-processing-vcg-eeg/
 
 ### 1. Vectorcardiography (VCG) Loop Synthesis
 The electrical activity of the myocardium can be approximated as a time-varying 3D equivalent cardiac dipole:
-$$ec{D}(t) = egin{bmatrix} V_x(t) & V_y(t) & V_z(t) \end{bmatrix}^T$$
+$$\vec{D}(t) = \begin{bmatrix} V_x(t) & V_y(t) & V_z(t) \end{bmatrix}^T$$
 Using the Frank lead network, orthogonal biopotentials $V_x$, $V_y$, and $V_z$ are extracted and integrated to reconstruct the continuous frontal, sagittal, and transverse vector loops. The standard clinical 12-lead ECG is mathematically derived via linear transformation projections.
 
 | VCG Orthogonal Leads (Time Domain) | 3D Cardiac Spatial Vector Loop |
@@ -91,10 +91,10 @@ Using the Frank lead network, orthogonal biopotentials $V_x$, $V_y$, and $V_z$ a
 
 ### 2. Polysomnographic EEG Sleep Stage Classification
 Continuous EEG brainwave recordings from central (C3/C4) and occipital (O1/O2) channels are analyzed via Discrete Fourier Transform (DFT). Spectral energy is computed across standard neurophysiological bands:
-- **Delta ($\delta$):** $0.5 - 4.0	ext{ Hz}$ — Characteristic of slow-wave sleep (NREM Stage 3).
-- **Theta ($	heta$):** $4.0 - 8.0	ext{ Hz}$ — Prominent during light sleep transition (NREM Stage 1).
-- **Alpha ($lpha$):** $8.0 - 13.0	ext{ Hz}$ — Characteristic of relaxed wakefulness with closed eyes (Stage 0).
-- **Beta ($eta$):** $13.0 - 30.0	ext{ Hz}$ — Associated with alertness and Rapid Eye Movement (REM) sleep.
+- **Delta ($\delta$):** $0.5 - 4.0\text{ Hz}$ - Characteristic of slow-wave sleep (NREM Stage 3).
+- **Theta ($\theta$):** $4.0 - 8.0\text{ Hz}$ - Prominent during light sleep transition (NREM Stage 1).
+- **Alpha ($\alpha$):** $8.0 - 13.0\text{ Hz}$ - Characteristic of relaxed wakefulness with closed eyes (Stage 0).
+- **Beta ($\beta$):** $13.0 - 30.0\text{ Hz}$ - Associated with alertness and Rapid Eye Movement (REM) sleep.
 
 | Awake State (Stage 0 Alpha Rhythm) | Light Sleep (NREM Stage 1 Theta Dominance) |
 | :---: | :---: |
@@ -109,9 +109,9 @@ Located in [`02-analog-front-end-multisim/`](02-analog-front-end-multisim/).
 Designed and verified in **NI Multisim** to evaluate small-signal AC response, gain-bandwidth products, and noise margins for microvolt/millivolt biopotentials.
 
 ### 1. ECG Biopotential Amplifier
-- **Topological Structure**: Input instrumentation buffer stage, active 2nd-order bandpass filter ($0.1	ext{ Hz} - 100	ext{ Hz}$), and an inverting op-amp summing stage.
-- **Gain Staging**: Continuously adjustable gain up to $7{,}000$ ($76.9	ext{ dB}$).
-- **CMRR**: $> 90	ext{ dB}$ to eliminate common-mode noise on the thorax.
+- **Topological Structure**: Input instrumentation buffer stage, active 2nd-order bandpass filter ($0.1\text{ Hz} - 100\text{ Hz}$), and an inverting op-amp summing stage.
+- **Gain Staging**: Continuously adjustable gain up to $7{,}000$ ($76.9\text{ dB}$).
+- **CMRR**: $> 90\text{ dB}$ to eliminate common-mode noise on the thorax.
 
 ![ECG Amplifier Schematic](docs/media/circuits/ecg_amplifier_schematic.png)
 *Figure: Complete multi-stage ECG instrumentation amplifier schematic in Multisim.*
@@ -120,17 +120,17 @@ Designed and verified in **NI Multisim** to evaluate small-signal AC response, g
 *Figure: AC Frequency response (Bode magnitude and phase) demonstrating flat passband between 0.1 Hz and 100 Hz.*
 
 ### 2. Active Twin-T 50 Hz Notch Filter
-Rejects severe $50	ext{ Hz}$ powerline hum without attenuating adjacent QRS diagnostic energy.
+Rejects severe $50\text{ Hz}$ powerline hum without attenuating adjacent QRS diagnostic energy.
 - **Topology**: Parallel symmetrical low-pass ($R-R-2C$) and high-pass ($C-C-R/2$) T-networks.
-- **Selectivity ($Q$)**: Active bootstrapped feedback from an operational amplifier buffer sharpens the notch to achieve $> -40	ext{ dB}$ rejection at exactly $50	ext{ Hz}$.
+- **Selectivity ($Q$)**: Active bootstrapped feedback from an operational amplifier buffer sharpens the notch to achieve $> -40\text{ dB}$ rejection at exactly $50\text{ Hz}$.
 
 ![Twin-T Notch Filter](docs/media/circuits/twin_t_notch_filter_schematic.png)
 *Figure: Symmetrical active Twin-T 50 Hz notch filter circuit.*
 
 ### 3. High-Gain EEG Biopotential Amplifier
-EEG signals measured at the scalp have amplitudes of merely $10 - 100\ \mu	ext{V}$.
+EEG signals measured at the scalp have amplitudes of merely $10 - 100\ \mu\text{V}$.
 - **Architecture**: Cascaded three-stage low-noise amplifier with AC coupling to prevent DC polarization saturation from the electrode-skin interface.
-- **Total Gain**: $pprox 75{,}000$ ($97.5	ext{ dB}$) with a passband up to $200	ext{ Hz}$.
+- **Total Gain**: $\approx 75{,}000$ ($97.5\text{ dB}$) with a passband up to $200\text{ Hz}$.
 
 | EEG Amplifier Schematic | Frequency Response (Bode Plot) |
 | :---: | :---: |
@@ -147,28 +147,28 @@ The experimental hardware platform pairs an **Analog Devices AD8232** analog fro
 
 | AD8232 Pin | Arduino Pin | Signal Type | Description |
 | :--- | :--- | :--- | :--- |
-| **OUTPUT** | `A0` | Analog Input | Conditioned biopotential signal ($0 - 3.3	ext{ V}$) |
+| **OUTPUT** | `A0` | Analog Input | Conditioned biopotential signal ($0 - 3.3\text{ V}$) |
 | **3.3V** | `3.3V` | DC Supply | Regulated low-noise power rail |
 | **GND** | `GND` | Reference | Common system ground |
 | **LO+** | `Pin 4` | Digital Input | Leads-off comparator output: Positive electrode detached |
 | **LO-** | `Pin 7` | Digital Input | Leads-off comparator output: Negative electrode detached |
 
-| Hardware Breadboard Interface | Einthoven Lead-I Electrode Placement |
+| Arduino IDE Sketch & Serial BPM Telemetry | MATLAB Live ECG & R-Peak Detection |
 | :---: | :---: |
-| ![Hardware Setup](docs/media/hardware/hardware_wiring_setup.png) | ![Electrode Placement](docs/media/hardware/electrode_placement_lead1.png) |
+| ![Arduino Serial Telemetry](docs/media/hardware/hardware_wiring_setup.png) | ![MATLAB Live R-Peak Plot](docs/media/hardware/electrode_placement_lead1.png) |
 
 ### 2. Firmware Implementation
-- **`ad8232_ecg_sampler.ino`**: Samples ADC channel A0 at $f_s pprox 95	ext{ Hz}$, checks digital lead-off status, and streams data via 9600 bps UART.
-- **`heart_rate_bpm.ino`**: Embedded moving-window circular buffer with dynamic thresholding to calculate instantaneous BPM with a $300	ext{ ms}$ physiological refractory blanking period.
+- **`ad8232_ecg_sampler.ino`**: Samples ADC channel A0 at $f_s \approx 95\text{ Hz}$, checks digital lead-off status, and streams data via 9600 bps UART.
+- **`heart_rate_bpm.ino`**: Embedded moving-window circular buffer with dynamic thresholding to calculate instantaneous BPM at `9600 bps` with a $300\text{ ms}$ physiological refractory blanking period (offline MATLAB analysis in `qrs_detect_and_hrv_metrics.m` uses a $450\text{ ms}$ refractory blanking period).
 
 ### 3. Digital Signal Processing & HRV Analysis Pipeline
-- **Baseline Wander Removal**: 2nd-order zero-phase Butterworth bandpass filter ($0.5 - 40.0	ext{ Hz}$) via `filtfilt` to prevent phase distortion.
-- **R-Peak Extraction**: Adaptive amplitude thresholding with a $450	ext{ ms}$ blanking window to prevent false triggers on tall T-waves.
+- **Baseline Wander Removal**: 2nd-order zero-phase Butterworth bandpass filter ($0.5 - 40.0\text{ Hz}$) via `filtfilt` to prevent phase distortion.
+- **R-Peak Extraction**: Adaptive amplitude thresholding with a $450\text{ ms}$ blanking window to prevent false triggers on tall T-waves.
 - **Time-Domain HRV Metrics**: Extraction of Normal-to-Normal ($NN$) intervals:
-  $$	ext{SDNN} = \sqrt{rac{1}{N-1}\sum_{i=1}^N (RR_i - \overline{RR})^2}$$
-  $$	ext{RMSSD} = \sqrt{rac{1}{N-1}\sum_{i=1}^{N-1} (RR_{i+1} - RR_i)^2}$$
+  $$\text{SDNN} = \sqrt{\frac{1}{N-1}\sum_{i=1}^N (RR_i - \overline{RR})^2}$$
+  $$\text{RMSSD} = \sqrt{\frac{1}{N-1}\sum_{i=1}^{N-1} (RR_{i+1} - RR_i)^2}$$
 - **Frequency-Domain Spectral HRV**: Welch periodogram power spectral density to quantify the Sympathovagal balance index:
-  $$	ext{LF/HF Ratio} = rac{\int_{0.04}^{0.15} S_{RR}(f)\,df}{\int_{0.15}^{0.40} S_{RR}(f)\,df}$$
+  $$\text{LF/HF Ratio} = \frac{\int_{0.04}^{0.15} S_{RR}(f)\,df}{\int_{0.15}^{0.40} S_{RR}(f)\,df}$$
 
 | Raw vs. Filtered ECG Waveform | Welch PSD of R-R Intervals (HRV) |
 | :---: | :---: |
@@ -178,23 +178,23 @@ The experimental hardware platform pairs an **Analog Devices AD8232** analog fro
 
 ## 📊 Clinical Findings & Empirical Benchmarks
 
-The in-vivo 30-second recording session from healthy subject yielded the following physiological metrics:
+From the recorded in-vivo Lead-I session in [`ecg_recorded_lead1.csv`](03-hardware-ecg-acquisition-hrv/data/ecg_recorded_lead1.csv) (2,878 samples over 29.52 s; actual sample cadence 97.47 Hz, evaluated at `fs = 95.0 Hz` in [`qrs_detect_and_hrv_metrics.m`](03-hardware-ecg-acquisition-hrv/matlab/qrs_detect_and_hrv_metrics.m)), 46 validated R-peaks (45 consecutive R-R intervals) yielded:
 
-| Metric | Measured Value | Standard Clinical Reference | Diagnostic Interpretation |
+| Metric | Measured Value | Standard Reference | Analytical Notes |
 | :--- | :--- | :--- | :--- |
-| **Mean Heart Rate** | **$78.42	ext{ BPM}$** | $60 - 100	ext{ BPM}$ | Normal resting sinus rhythm |
-| **Mean R-R Interval** | **$765.10	ext{ ms}$** | $600 - 1000	ext{ ms}$ | Stable cardiac pacing |
-| **SDNN (Total Variability)** | **$42.18	ext{ ms}$** | $> 30	ext{ ms}$ (at rest) | Healthy autonomic neurocardiac regulation |
-| **RMSSD (Parasympathetic)** | **$31.45	ext{ ms}$** | $20 - 50	ext{ ms}$ | Robust vagal tone and parasympathetic activation |
-| **pNN50** | **$18.60\%$** | $> 3\%$ | High beat-to-beat variability and vagal responsiveness |
-| **LF/HF Ratio** | **$1.42$** | $1.0 - 2.0$ | Balanced sympathovagal autonomic homeostasis |
+| **Mean Heart Rate** | **$91.48\text{ BPM}$** | $60 - 100\text{ BPM}$ | Resting sinus rhythm (FFT peak: $1.5184\text{ Hz}$ / $91.11\text{ BPM}$) |
+| **Mean R-R Interval** | **$655.91\text{ ms}$** | $600 - 1000\text{ ms}$ | Average over 45 intervals from 46 R-peaks |
+| **SDNN (Total Variability)** | **$12.46\text{ ms}$** | Short-term ~30s window | Low total R-R variance during brief resting capture |
+| **RMSSD (Parasympathetic)** | **$10.76\text{ ms}$** | Short-term beat-to-beat | Root mean square of successive R-R differences |
+| **pNN50** | **$0.00\%$** | Fraction $> 50\text{ ms}$ | No adjacent interval deltas exceeded $50\text{ ms}$ |
+| **LF/HF Ratio** | **$1.60$** | $1.0 - 2.0$ | Welch 4 Hz PSD: $\text{LF}=46.9\text{ ms}^2$, $\text{HF}=29.2\text{ ms}^2$ |
 
 ---
 
 ## 📁 Repository Organization
 
 ```
-Biomedical-Instrumentation-and-Signal-Processing/
+Introduction-to-Biomedical-Engineering-IBME/
 ├── 01-biosignal-processing-vcg-eeg/        # Biosignal modeling & sleep stage classification
 │   ├── IBME_CA1_part1.m                   # VCG 3D loops & 12-lead ECG derivation
 │   ├── IBME_CA1_part2_stage0.m            # EEG Awake State (Stage 0) Alpha rhythm analysis
@@ -257,8 +257,8 @@ run('IBME_CA1_part2_tofind.m');
 ### 2. NI Multisim Circuit Simulation (Module 2)
 1. Open **NI Multisim** (v14.0 or higher).
 2. Open [`02-analog-front-end-multisim/ECG.ms14`](02-analog-front-end-multisim/ECG.ms14).
-3. Run **AC Analysis / Bode Plotter** to inspect passband gain ($0.1 - 100	ext{ Hz}$).
-4. Open [`Notch_filter.ms14`](02-analog-front-end-multisim/Notch_filter.ms14) to verify $> -40	ext{ dB}$ attenuation at $50	ext{ Hz}$.
+3. Run **AC Analysis / Bode Plotter** to inspect passband gain ($0.1 - 100\text{ Hz}$).
+4. Open [`Notch_filter.ms14`](02-analog-front-end-multisim/Notch_filter.ms14) to verify $> -40\text{ dB}$ attenuation at $50\text{ Hz}$.
 
 ### 3. Embedded Hardware & Real-Time Telemetry (Module 3)
 1. **Hardware Assembly**:

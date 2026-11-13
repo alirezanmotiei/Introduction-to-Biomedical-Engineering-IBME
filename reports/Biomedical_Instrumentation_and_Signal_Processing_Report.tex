@@ -70,7 +70,7 @@ An Analog Devices AD8232 front-end board was connected in Lead-I configuration a
 Baseline drift caused by respiration and perspiration was removed via a zero-phase 2nd-order Butterworth bandpass filter ($0.5 - 40$~Hz). QRS complexes were detected using an adaptive peak thresholding algorithm with a refractory period of 450~ms.
 
 \subsection{Heart Rate Variability (HRV) Analysis}
-R-R intervals were extracted to generate cardiac tachograms. Standard clinical metrics were evaluated:
+From the 29.52~s Lead-I recording in \texttt{ecg\_recorded\_lead1.csv} (2,878 samples, actual cadence 97.47~Hz evaluated at nominal $f_s = 95.0$~Hz in MATLAB, yielding 46 R-peaks and 45 consecutive R-R intervals), R-R intervals were extracted to generate cardiac tachograms. Standard clinical metrics were evaluated:
 \begin{equation}
 \text{SDNN} = \sqrt{\frac{1}{N-1}\sum_{i=1}^N (RR_i - \overline{RR})^2}
 \end{equation}
@@ -78,21 +78,21 @@ R-R intervals were extracted to generate cardiac tachograms. Standard clinical m
 \text{RMSSD} = \sqrt{\frac{1}{N-1}\sum_{i=1}^{N-1} (RR_{i+1} - RR_i)^2}
 \end{equation}
 
-In the frequency domain, Welch's periodogram computed the power in the Low Frequency (LF: $0.04-0.15$~Hz) and High Frequency (HF: $0.15-0.40$~Hz) bands. The resulting LF/HF ratio indicates sympathovagal autonomic balance.
+In the frequency domain, Welch's periodogram (after 4~Hz spline resampling of the R-R tachogram) computed power in the Low Frequency ($\text{LF}: 0.04-0.15\text{ Hz}$, $46.9\text{ ms}^2$) and High Frequency ($\text{HF}: 0.15-0.40\text{ Hz}$, $29.2\text{ ms}^2$) bands, giving $\text{LF/HF} = 1.60$.
 
 \begin{table}[h]
 \centering
-\caption{Summary of Empirical HRV Parameters}
+\caption{Summary of Empirical HRV Parameters (\texttt{ecg\_recorded\_lead1.csv})}
 \begin{tabular}{lcc}
 \toprule
-\textbf{Biometric Metric} & \textbf{Observed Value} & \textbf{Reference Range} \\
+\textbf{Biometric Metric} & \textbf{Observed Value} & \textbf{Notes / Range} \\
 \midrule
-Mean Heart Rate & 78.42 BPM & 60 -- 100 BPM \\
-Mean R-R Interval & 765.10 ms & 600 -- 1000 ms \\
-SDNN & 42.18 ms & $> 30$ ms \\
-RMSSD & 31.45 ms & $20 - 50$ ms \\
-pNN50 & 18.60 \% & $> 3$ \% \\
-LF/HF Ratio & 1.42 & 1.0 -- 2.0 \\
+Mean Heart Rate & 91.48 BPM & 60 -- 100 BPM (FFT: 91.11 BPM) \\
+Mean R-R Interval & 655.91 ms & 600 -- 1000 ms (46 peaks) \\
+SDNN & 12.46 ms & Short 29.52 s window \\
+RMSSD & 10.76 ms & Beat-to-beat RMS delta \\
+pNN50 & 0.00 \% & Successive deltas $> 50\text{ ms}$ \\
+LF/HF Ratio & 1.60 & 1.0 -- 2.0 \\
 \bottomrule
 \end{tabular}
 \end{table}

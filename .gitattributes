@@ -1,0 +1,17 @@
+* text=auto eol=lf
+*.ino text eol=lf
+*.m text eol=lf
+*.py text eol=lf
+*.md text eol=lf
+*.tex text eol=lf
+*.csv text eol=lf
+*.sh text eol=lf
+*.bat text eol=crlf
+*.cmd text eol=crlf
+*.pdf binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.wav binary
+*.mat binary
+*.edf binary
